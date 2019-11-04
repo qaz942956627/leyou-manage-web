@@ -64,6 +64,7 @@
           // 定义一个请求参数对象，通过解构表达式来获取brand中的属性
           const {categories, letter, ...params} = this.brand;
           // 数据库中只要保存分类的id即可，因此我们对categories的值进行处理,只保留id，并转为字符串
+          // c代表每个对象 map就是将categoryies的集合中所有对象的id取出来放到一个数组里{1,2,3},join把数组转换成用,分割的字符串传到后台用list接收就可以
           params.cids = categories.map(c => c.id).join(",");
           // 将字母都处理为大写
           params.letter = letter.toUpperCase();
@@ -72,7 +73,7 @@
           this.$http({
             method: this.isEdit ? 'put' : 'post',
             url: '/item/brand',
-            data: params
+            data: this.$qs.stringify(params)
           }).then(() => {
             // 关闭窗口
             this.$emit("close");
