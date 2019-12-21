@@ -137,6 +137,15 @@
             this.oldBrand.categories = data;
           })
       },
+      deleteBrand(oldBrand){
+        // 根据品牌信息查询商品分类
+        this.$http.delete("/item/category/bid/" + oldBrand.id)
+          .then(() => {
+              this.$message.info("删除成功!");
+          }).catch(() =>{
+              this.$message.info("删除失败!")
+        })
+      },
       closeWindow(){
         // 重新加载数据
         this.getDataFromServer();
